@@ -9,6 +9,7 @@ pandas = "*"
 openpyxl = "*"
 
 [dev-packages]
+pandas-stubs = "*"
 
 [requires]
 python_version = "3.12"
