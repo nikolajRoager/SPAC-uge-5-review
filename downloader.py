@@ -15,7 +15,7 @@ class Downloader:
         res: requests.Response = requests.get(url)
         return (res.status_code, res.content)
 
-    def download(self, row: Series) -> bool:
+    def download_row(self, row: Series) -> bool:
         primary_url: str = row[Constants.PrimaryUrl.value]
         secondary_url: str = row[Constants.SecondaryUrl.value]
         file_name: str = row['BRnum'] + '.pdf'
@@ -23,10 +23,15 @@ class Downloader:
         with open(os.path.join(self.download_path, file_name), 'wb') as pdf_out:
             try:
                 status, content = self.download_file(primary_url)
-
-                pdf_out.write(content)
+                if status == 200:
+                    pdf_out.write(content)
+                    return True
+                else:
+                    status, content = self.download_file(secondary_url)
+                    if status == 200:
+                        pdf_out.write(content)
+                        return True
             except:
                 pass
 
-
-        return True
+        return False

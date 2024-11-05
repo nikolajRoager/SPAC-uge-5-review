@@ -15,10 +15,10 @@ gri = gri.loc[(gri[Constants.PrimaryUrl.value].notnull()) | (gri[Constants.Secon
 
 print(gri)
 
-for i, row in gri.iterrows():
-    if i > 10: break
+for i, row in list(gri.iterrows())[:10]:
+    
 
-    downloaded: bool = downloader.download(row)
+    downloaded: bool = downloader.download_row(row)
 
 
 
