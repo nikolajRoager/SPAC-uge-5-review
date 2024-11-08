@@ -18,16 +18,15 @@ class Downloader:
 
     async def download_file(self, url) -> Tuple[int, bytes]:
         async with aiohttp.ClientSession() as session:
-            try:
-                async with session.get(url, timeout=Config.DownloadTimeout.value) as res:
-                    res.raise_for_status()
-                    content = await res.read()
-                    return (res.status, content)
-            except aiohttp.NonHttpUrlClientError:
-                return (404, b'')
-            except Exception as e:
-                if url == '' or None:
-                    return (404, b'')
+            for _ in range(3):
+                try:
+                    async with session.get(url, timeout=Config.DownloadTimeout.value) as res:
+                        res.raise_for_status()
+                        content = await res.read()
+                        return (res.status, content)
+                except aiohttp.ClientError:
+                    continue
+            return (404, b'')
 
     async def download_row(self, row: Series) -> bool:
         primary_url: str = row[Config.PrimaryUrl.value]
@@ -48,13 +47,14 @@ class Downloader:
                     with open(file_path, 'wb') as pdf_out:
                         pdf_out.write(content)
                     if self.validater.is_valid_pdf(file_path):
-                        print(i)
                         return True
                     else:
                         os.remove(file_path)
             except aiohttp.NonHttpUrlClientError as e:
                 pass
             except TypeError as e:
+                pass
+            except:
                 pass
 
         return False

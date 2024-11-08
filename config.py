@@ -4,8 +4,7 @@ import os
 class Config(Enum):
     # Paths
     BaseDir = os.path.dirname(os.path.abspath(__file__))
-    RelativeDownloadDir = 'download'
-    DownloadDir = os.path.join(BaseDir, RelativeDownloadDir)
+    DownloadDir = os.path.join(BaseDir, 'download')
 
     # Columns
     PrimaryUrl = 'Pdf_URL'
@@ -26,4 +25,4 @@ class Config(Enum):
     FileLimit = 0
 
     # Other
-    DownloadTimeout = 5
+    DownloadTimeout = 0

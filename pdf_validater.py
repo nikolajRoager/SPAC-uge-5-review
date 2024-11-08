@@ -11,6 +11,5 @@ class PdfValidater:
                 if len(reader.pages) == 0:
                     return False
             return True
-        except (PdfReadError, FileNotFoundError, IOError, Exception) as e:
-            # print(e)
+        except:
             return False

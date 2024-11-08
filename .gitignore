@@ -2,3 +2,5 @@
 .~lock.*
 
 download/
+
+__pycache__/
