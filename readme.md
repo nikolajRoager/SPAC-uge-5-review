@@ -56,6 +56,3 @@ Projektet bruger følgende Python-pakker:
 - `pypdf2`: Et rent Python-bibliotek til at arbejde med PDF-filer.
 - `aiohttp`: En asynkron HTTP-klient/server framework til Python.
 
-## Licens
-
-Dette projekt er licenseret under MIT-licensen.
