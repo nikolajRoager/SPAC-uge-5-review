@@ -1,19 +1,25 @@
 import unittest
+from downloader import Downloader
 
-def add(a, b):
-    return a + b
+from unittest import IsolatedAsyncioTestCase
 
-class TestAddFunction(unittest.TestCase):
-    def test_add_positive_numbers(self):
-        self.assertEqual(add(1, 2), 3)
 
-    def test_add_negative_numbers(self):
-        self.assertEqual(add(-1, -2), -3)
+#Get status from URL, used for  testing if download_file from the downloader is working
+async def getFromUrl(url : str):
+    downloader = Downloader()
+    status, data = await downloader.download_file(url)
+    return status
 
-    def test_add_mixed_numbers(self):
-        self.assertEqual(add(1, -2), -1)
-        self.assertEqual(add(-1, 2), 1)
+class TestAddFunction(unittest.IsolatedAsyncioTestCase):
+    async def test_working(self):
+        #arch wiki is highly unlikely to ever be down
+        self.assertEqual(await getFromUrl("https://wiki.archlinux.org/title/Main_page"), 200)
+
+    async def test_badURL(self):
+        #This is not a website
+        self.assertNotEqual(await getFromUrl("nono://notAWebsiteURL.nope"), 200)
 
 if __name__ == '__main__':
     print("Start test")
     unittest.main()
+    

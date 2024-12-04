@@ -16,7 +16,7 @@ class Downloader:
     def __init__(self):
         os.makedirs(self.download_path, exist_ok=True)
 
-    async def download_file(self, url) -> Tuple[int, bytes]:
+    async def download_file(self, url : str) -> Tuple[int, bytes]:
         async with aiohttp.ClientSession() as session:
             for _ in range(3):
                 try:
