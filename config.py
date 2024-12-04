@@ -22,7 +22,8 @@ class Config(Enum):
     OutputFile = 'Metadata2006_2020.xlsx'
 
     # Debug
-    FileLimit = 0
+    batch_size= 1000
+    FileLimit = 1000
 
     # Other
-    DownloadTimeout = 0
+    DownloadTimeout = 30
