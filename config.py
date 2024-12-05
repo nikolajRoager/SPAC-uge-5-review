@@ -21,9 +21,7 @@ class Config(Enum):
     GRIFile = 'GRI_2017_2020.xlsx'
     OutputFile = 'Metadata2006_2020.xlsx'
 
-    # Debug
+    # Download settings
     batch_size= 1000
-    FileLimit = 1000
-
-    # Other
+    FileLimit = 0
     DownloadTimeout = 30
