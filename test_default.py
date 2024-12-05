@@ -7,16 +7,18 @@ from unittest import IsolatedAsyncioTestCase
 
 
 #Get status from URL, used for  testing if download_file from the downloader is working
-async def getFromUrl(url : str) -> int: 
+async def getFromUrl(url : str) -> int:
     downloader = Downloader()
     status, data = await downloader.download_file(url)
     return status
 
-async def getFromRow() -> bool:
+async def getFromRow():
     downloader = Downloader()
-    row: Series =[]
-    row[Config.PrimaryUrl.value]="http://www.bookergroupee.com/~/media/Files/B/Booker-Group/pdf/annual-report-2017.pdf"
-    row[Config.SecondaryUrl.value]="http://database.globalreporting.org/reports/281d1fc3-20f2-e711-8136-e0071b65f141"
+    row= Series({Config.PrimaryUrl.value : "https://www.bonusvorsorge.at/uploads/BONUS%20Nachhaltigkeitsbericht%202017.pdf",
+    Config.SecondaryUrl.value : "http://database.globalreporting.org/reports/281d1fc3-20f2-e711-8136-e0071b65f141",
+    Config.IdCol.value : "TEST"
+    })
+
     return await downloader.download_row(row)
 #        download_row
 
@@ -38,7 +40,7 @@ class TestAddFunction(unittest.IsolatedAsyncioTestCase):
 
     async def test_download_row(self):
         self.assertTrue(await getFromRow())
-        
+
     #async def download_row(self, row: Series) -> bool:
     #    primary_url: str = row[Config.PrimaryUrl.value]
     #    secondary_url: str = row[Config.SecondaryUrl.value]
@@ -47,4 +49,4 @@ class TestAddFunction(unittest.IsolatedAsyncioTestCase):
 if __name__ == '__main__':
     print("Start test")
     unittest.main()
-    
+

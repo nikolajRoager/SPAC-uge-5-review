@@ -34,6 +34,7 @@ class Downloader:
         file_name: str = row[Config.IdCol.value] + '.pdf'
         file_path = os.path.join(self.download_path, file_name)
 
+
         for i, url in enumerate([primary_url, secondary_url]):
             if type(url) != str:
                 continue
@@ -46,6 +47,7 @@ class Downloader:
                 if status == 200:
                     with open(file_path, 'wb') as pdf_out:
                         pdf_out.write(content)
+
                     if self.validater.is_valid_pdf(file_path):
                         return True
                     else:
